@@ -13,54 +13,53 @@
 // inizializzazione costanti
 const btnHTML = document.getElementById('btnPlay')
 const grigliaHTML = document.getElementById('griglia')
+const selectHTML = document.getElementById('cmDifficolta')
 
+
+// applicato evento al bottone
 btnHTML.addEventListener('click', function(){
 
+    // resetta la griglia ogni volta che premi il tasto
+    grigliaHTML.innerHTML = ''
+
+    // rende visibile la griglia sostituendo le proprietà di stile
+    grigliaHTML.style.setProperty('display', 'flex')
     
+
+    //ciclo che crea le celle in base alla disfficoltà nella griglia
+    for (let i = 1; i <= selectHTML.value; i++) {
+
+        //creo un singolo div vuoto
+        let box = document.createElement("div")
+
+        // adatta tramite il calc le celle in base alla difficoltà
+        box.style.setProperty('flex-basis', `calc(100% / ${Math.sqrt(selectHTML.value)})`)
+
+        //associo la classe al div creato
+        box.classList.add("box")
+
+        //inseriamo i numeri in modo sequenziale
+        box.innerHTML = `<span>${ [i] }</span>`
+
+
+        // al click seleziona e cambia il colore della cella
+        box.addEventListener('click', function () {
+            
+            // console.log(this)
+
+            let specificoSpanHtml = this.querySelector( "span" ).innerText
+
+            this.classList.toggle('sky')
+
+            console.log(specificoSpanHtml)
+
+        })
+
+        //inserisco il div nella griglia
+        grigliaHTML.append(box)
+
+    }
+
 })
 
-
-//1- creiamo 64 celle nella griglia
-for (let i = 0; i < 64; i++) {
-    //creo un singolo div vuoto
-    let box = document.createElement("div")
-
-
-
-    //associo la classe al div creato
-    box.classList.add("box")
-
-    //inseriamo i numeri in modo sequenziale
-    box.innerHTML = `<span>${ arrayNumeriSingolli[i] }</span>`
-
-    box.addEventListener('click', function () {
-        // this.classList.toggle("active")
-
-        // pariOdispari( parseInt( box.innerText ) )
-        // console.log( this.querySelector( "span" ).innerText )
-
-        console.log( this )
-
-        let specificoSpanHtml = this.querySelector( "span" ).innerText
-
-        if ( specificoSpanHtml % 2 == 0) {
-            this.classList.toggle("green")
-        } else {
-            this.classList.toggle("red")
-        }
-
-
-        //controllo condizionale pari e dispari
-
-    })
-
-    //inserisco il div nella griglia
-    grigliaHtml.append(box)
-
-}
-
-
-//funzione da 1 a ....
-function randomica(max) {
-    return Math.floor(Math.random() * max) + 1
-}
+// Terminato esercizio
